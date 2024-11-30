@@ -1,0 +1,207 @@
+import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
+public class WetonDigital {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("====================================================================");
+        System.out.println("============= SELAMAT DATANG DI PROGRAM WETON DIGITAL ==============");
+        System.out.println("====================================================================");
+        while (true) {
+            // Input tanggal lahir pengguna
+            System.out.print("Masukkan tanggal lahir Anda (DD): ");
+            int day = scan.nextInt();
+            System.out.print("Masukkan bulan lahir Anda (MM): ");
+            int month = scan.nextInt();
+            System.out.print("Masukkan tahun lahir Anda (YYYY): ");
+            int year = scan.nextInt();
+            scan.nextLine();
+
+            // Metode perhitungan neptu
+            int neptu = perhitunganNeptu(day, month, year);
+            System.out.println("Neptu anda berjumlah: " + neptu);
+
+            // Metode menampilkan primbon
+            tampilanPrimbon(neptu);
+
+            // Opsi mengulangi program
+            System.out.print("Apakah anda ingin mencoba program lagi? (iya/tidak): ");
+            String opsi = scan.nextLine().toLowerCase();
+            if (opsi.equals("iya")) {
+                continue;
+            } else if (opsi.equals("tidak")) {
+                break;
+            } else {
+                System.out.println("Opsi yang dimaksudkan tidak valid! ");
+                break;
+            }
+
+        }
+        System.out.println("===================================================================");
+        System.out.println("============= TERIMAKASIH TELAH MEMAKAI PROGRAM SAYA ==============");
+        System.out.println("===================================================================");
+
+        scan.close();
+    }
+
+    // isi metode perhitungan neptu
+    public static int perhitunganNeptu(int day, int month, int year) {
+        String[] hari = { "Sabtu", "Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat" };
+        String[] pasaran = { "Legi", "Pahing", "Pon", "Wage", "Kliwon" };
+
+        // Menghitung jumlah hari sejak 1 Januari 2000 (Sabtu Legi), 1 januari 2000
+        // disini dijadikan patokan agar program dapat memahami algoritma perhitungan
+        // pasaran yang berulang setiap 5 harinya.
+        LocalDate PatokanTanggal = LocalDate.of(2000, 1, 1);
+        LocalDate TanggalLahir = LocalDate.of(year, month, day);
+        long JarakHari = ChronoUnit.DAYS.between(PatokanTanggal, TanggalLahir);
+
+        // Menghitung indeks hari dalam seminggu dan pasaran Jawa
+        int hariIndex = (int) ((JarakHari % 7 + 7) % 7);
+        int pasaranIndex = (int) ((JarakHari % 5 + 5) % 5);
+        System.out.println("Weton Anda adalah: " + hari[hariIndex] + " " + pasaran[pasaranIndex]);
+
+        int nilaihari = 0;
+        int nilaipasaran = 0;
+        switch (hari[hariIndex]) {
+            case "Senin":
+                nilaihari = 4;
+                break;
+            case "Selasa":
+                nilaihari = 3;
+                break;
+            case "Rabu":
+                nilaihari = 7;
+                break;
+            case "Kamis":
+                nilaihari = 8;
+                break;
+            case "Jumat":
+                nilaihari = 6;
+                break;
+            case "Sabtu":
+                nilaihari = 9;
+                break;
+            case "Minggu":
+                nilaihari = 5;
+                break;
+            default:
+                System.out.println("Hari tidak valid");
+                break;
+        }
+        switch (pasaran[pasaranIndex]) {
+            case "Wage":
+                nilaipasaran = 4;
+                break;
+            case "Kliwon":
+                nilaipasaran = 8;
+                break;
+            case "Legi":
+                nilaipasaran = 5;
+                break;
+            case "Pahing":
+                nilaipasaran = 9;
+                break;
+            case "Pon":
+                nilaipasaran = 7;
+                break;
+            default:
+                System.out.println("Pasaran tidak valid");
+                break;
+        }
+        return nilaihari + nilaipasaran;
+
+    }
+
+    // isi metode menampilkan primbon
+    public static void tampilanPrimbon(int neptu) {
+        if (neptu == 7) {
+            System.out.println("=========================================");
+            System.out.println("===== Neptu 7 (Pendito Kang Lelaku) =====");
+            System.out.println("=========================================");
+            System.out.println(
+                    "Watak          : Orang dengan neptu 7 dikenal memiliki sifat yang suka berpergian jauh dan sering berpetualang. Mereka memiliki tujuan tertentu dalam setiap perjalanan mereka. Namun, mereka juga cenderung pemalas dan sulit berkomunikasi dengan baik. Wataknya sering dianggap kurang sabar dan lebih suka hidup sendiri.");
+            System.out.println("Jodoh          : Anda cocok dengan orang yang memiliki neptu 7, 8, 9, 12, 14, 16");
+        } else if (neptu == 8) {
+            System.out.println("=========================================");
+            System.out.println("========= Neptu 8 (Lakune Geni) =========");
+            System.out.println("=========================================");
+            System.out.println(
+                    "Watak          : Orang dengan neptu 8 memiliki watak yang mudah meledak-ledak seperti api. Mereka bisa sangat emosional, pendendam, dan cenderung sangat cepat marah. Namun, mereka juga dikenal sangat teguh pendirian dan tidak mudah goyah. Watak mereka cenderung keras dan sulit untuk diajak kompromi.");
+            System.out.println("Jodoh          : Anda cocok dengan orang yang memiliki neptu 7, 9, 10, 13, 17, 18");
+        } else if (neptu == 9) {
+            System.out.println("=========================================");
+            System.out.println("======== Neptu 9 (Lakune Angin) =========");
+            System.out.println("=========================================");
+            System.out.println(
+                    "Watak          : Orang dengan neptu 9 memiliki watak yang tidak stabil, mudah berubah, dan sering goyah dalam pendirian. Mereka cenderung tidak memiliki pendirian yang kuat dan mudah dipengaruhi oleh orang lain. Namun, mereka dikenal sangat lincah dan memiliki kemampuan untuk beradaptasi dengan cepat di berbagai situasi.");
+            System.out.println("Jodoh          : Anda cocok dengan orang yang memiliki neptu 7, 8, 9, 12, 14, 16");
+        } else if (neptu == 10) {
+            System.out.println("=========================================");
+            System.out.println("==== Neptu 10 (Pendito Mbangun Teki) ====");
+            System.out.println("=========================================");
+            System.out.println(
+                    "Watak          : Orang dengan neptu 10 dikenal suka memberikan nasihat kepada orang lain, tetapi mereka sendiri enggan menerima kritik atau nasihat dari orang lain. Mereka memiliki kecerdasan tinggi dan cukup bijaksana, meskipun terkadang terlalu keras kepala dan sulit menerima masukan");
+            System.out.println("Jodoh          : Anda cocok dengan orang yang memiliki neptu 8, 12, 15, 18");
+        } else if (neptu == 11) {
+            System.out.println("=========================================");
+            System.out.println("======== Neptu 11 (Lakune Setan) ========");
+            System.out.println("=========================================");
+            System.out.println(
+                    "Watak          : Orang dengan neptu 11 sering kali tidak cocok menjadi pemimpin, karena sifatnya yang sering bimbang dan kurang bisa mengambil keputusan dengan cepat. Mereka cenderung dilema dalam banyak hal dan sering ragu-ragu, sehingga sifat ini membuat mereka kurang memiliki ketegasan dalam memimpin");
+            System.out.println("Jodoh          : Anda cocok dengan orang yang memiliki neptu 9, 12, 16, 17");
+        } else if (neptu == 12) {
+            System.out.println("=========================================");
+            System.out.println("======= Neptu 12 (Lakune Kembang) =======");
+            System.out.println("=========================================");
+            System.out.println(
+                    "Watak          : Orang dengan neptu 12 dikenal sangat penurut dan suka mengalah untuk menjaga perdamaian. Mereka lebih cenderung untuk menghindari konflik dan lebih memilih hidup dalam keharmonisan. Mereka juga rajin dan memiliki kebiasaan untuk membantu orang lain");
+            System.out.println("Jodoh          : Anda cocok dengan orang yang memiliki neptu 7, 10, 11, 15, 18");
+        } else if (neptu == 13) {
+            System.out.println("=========================================");
+            System.out.println("======= Neptu 13 (Lakune Lintang) =======");
+            System.out.println("=========================================");
+            System.out.println(
+                    "Watak          : Orang dengan neptu 13 memiliki pesona yang sangat menarik dan menyenangkan. Mereka juga senang berpetualang dan suka mengeksplorasi hal-hal baru. Watak mereka cenderung tidak ingin menjadi pusat perhatian atau pemimpin, tetapi mereka memiliki karisma dan pesona yang membuat mereka disukai banyak orang.");
+            System.out.println("Jodoh          : Anda cocok dengan orang yang memiliki neptu 8, 14, 16");
+        } else if (neptu == 14) {
+            System.out.println("=========================================");
+            System.out.println("======= Neptu 14 (Lakune Mbulan) ========");
+            System.out.println("=========================================");
+            System.out.println(
+                    "Watak          : Orang dengan neptu 14 dikenal sebagai pendengar yang baik dan sering memberi nasihat yang bijaksana kepada orang lain. Mereka juga sangat cerdas dan rendah hati, tidak suka pamer atau mencari perhatian. Karakteristik mereka yang positif membuat mereka disukai banyak orang.");
+            System.out.println("Jodoh          : Anda cocok dengan orang yang memiliki neptu 7, 9, 13, 15, 18");
+        } else if (neptu == 15) {
+            System.out.println("=========================================");
+            System.out.println("======== Neptu 15 (Lakune Geni) =========");
+            System.out.println("=========================================");
+            System.out.println(
+                    "Watak          : Orang dengan neptu 15 sangat mudah marah dan emosional, mirip dengan sifat api yang mudah menyala. Mereka bisa menjadi sangat pendendam dan tidak suka diperintah, mereka lebih suka bertindak sesuai dengan keinginan mereka sendiri dan memiliki sifat tegas.");
+            System.out.println("Jodoh          : Anda cocok dengan orang yang memiliki neptu 10, 12, 14, 18");
+        } else if (neptu == 16) {
+            System.out.println("=========================================");
+            System.out.println("======== Neptu 16 (Lakune Bumi) =========");
+            System.out.println("=========================================");
+            System.out.println(
+                    "Watak          : Orang dengan neptu 16 memiliki sifat yang mengayomi dan penuh kasih sayang. Mereka sangat perhatian terhadap orang lain, namun jika marah, mereka bisa sangat mengerikan. Mereka memiliki sifat lembut tetapi kuat dalam menghadapi masalah.");
+            System.out.println("Jodoh          : Anda cocok dengan orang yang memiliki neptu 7, 9, 11, 14, 18");
+        } else if (neptu == 17) {
+            System.out.println("=========================================");
+            System.out.println("======= Neptu 17 (Lakune Gunung) ========");
+            System.out.println("=========================================");
+            System.out.println(
+                    "Watak          : Orang dengan neptu 17 cenderung pendiam dan memiliki hati yang baik. Namun, mereka memiliki sifat lambat dalam bertindak dan berpikir. Mereka tidak suka terburu-buru dan cenderung lebih berhati-hati dalam mengambil keputusan, meskipun kadang sifat ini bisa merugikan mereka.");
+            System.out.println("Jodoh          : Anda cocok dengan orang yang memiliki neptu  8, 11, 16");
+        } else if (neptu == 18) {
+            System.out.println("=========================================");
+            System.out.println("====== Neptu 18 (Lakune Paripurna) ======");
+            System.out.println("=========================================");
+            System.out.println(
+                    "Watak          : Orang dengan neptu 18 dikenal memiliki sifat dominan dan seringkali egois. Mereka sangat ambisius dan cenderung mengejar kekuasaan atau kontrol dalam hidup mereka. Mereka tidak suka ditolak dan ingin menjadi pemimpin atau pengambil keputusan dalam kelompok. Watak mereka sangat kuat, tetapi kadang terlalu keras kepala dan sulit menerima pendapat orang lain.");
+            System.out.println("Jodoh          : Anda cocok dengan orang yang memiliki neptu 10, 12, 15, 16");
+        } else {
+            System.out.println("Neptu anda tidak valid, Anda tidak memiliki Primbon !");
+        }
+    }
+}
